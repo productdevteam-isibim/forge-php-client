@@ -64,6 +64,7 @@ class ManifestChildren implements ArrayAccess
         'progress' => 'string',
         'status' => 'string',
         'resolution' => 'string[]',
+        'guid' => 'string',
         'model_guid' => 'string',
         'object_ids' => 'int[]',
         'children' => '\Autodesk\Forge\Client\Model\ManifestChildren[]',
@@ -92,7 +93,8 @@ class ManifestChildren implements ArrayAccess
         'progress' => 'progress',
         'status' => 'status',
         'resolution' => 'resolution',
-        'model_guid' => 'modelGUID',
+        'guid' => 'guid',
+        'model_guid' => 'modelGuid',
         'object_ids' => 'objectIds',
         'children' => 'children',
         'messages' => 'messages',
@@ -113,6 +115,7 @@ class ManifestChildren implements ArrayAccess
         'progress' => 'setProgress',
         'status' => 'setStatus',
         'resolution' => 'setResolution',
+        'guid' => 'setGuid',
         'model_guid' => 'setModelGuid',
         'object_ids' => 'setObjectIds',
         'children' => 'setChildren',
@@ -134,6 +137,7 @@ class ManifestChildren implements ArrayAccess
         'progress' => 'getProgress',
         'status' => 'getStatus',
         'resolution' => 'getResolution',
+        'guid' => 'getGuid',
         'model_guid' => 'getModelGuid',
         'object_ids' => 'getObjectIds',
         'children' => 'getChildren',
@@ -171,9 +175,9 @@ class ManifestChildren implements ArrayAccess
     const STATUS_FAILED = 'failed';
     const STATUS_TIMEOUT = 'timeout';
     const STATUS_PARTIALSUCCESS = 'partialsuccess';
-    
 
-    
+
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -187,7 +191,7 @@ class ManifestChildren implements ArrayAccess
             self::TYPE_VIEW,
         ];
     }
-    
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -203,7 +207,7 @@ class ManifestChildren implements ArrayAccess
             self::ROLE_THUMBNAIL,
         ];
     }
-    
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -219,7 +223,7 @@ class ManifestChildren implements ArrayAccess
             self::STATUS_PARTIALSUCCESS,
         ];
     }
-    
+
 
     /**
      * Associative array for storing property values
@@ -242,6 +246,7 @@ class ManifestChildren implements ArrayAccess
         $this->container['progress'] = isset($data['progress']) ? $data['progress'] : null;
         $this->container['status'] = isset($data['status']) ? $data['status'] : null;
         $this->container['resolution'] = isset($data['resolution']) ? $data['resolution'] : null;
+        $this->container['guid'] = isset($data['guid']) ? $data['guid'] : null;
         $this->container['model_guid'] = isset($data['model_guid']) ? $data['model_guid'] : null;
         $this->container['object_ids'] = isset($data['object_ids']) ? $data['object_ids'] : null;
         $this->container['children'] = isset($data['children']) ? $data['children'] : null;
@@ -268,9 +273,9 @@ class ManifestChildren implements ArrayAccess
         if ($this->container['role'] === null) {
             $invalid_properties[] = "'role' can't be null";
         }
-        $allowed_values = ["2d", "3d", "graphics", "manifest", "thumbnail", "ifc"];
+        $allowed_values = ["2d", "3d", "graphics", "manifest", "thumbnail", "ifc","pdf-page"];
         if (!in_array($this->container['role'], $allowed_values)) {
-            $invalid_properties[] = "invalid value for 'role', must be one of '2d', '3d', 'graphics', 'manifest', 'thumbnail', 'ifc'.";
+            $invalid_properties[] = "invalid value for 'role', must be one of '2d', '3d', 'graphics', 'manifest', 'thumbnail', 'ifc', 'pdf-page'.";
         }
 
         if ($this->container['mime'] === null) {
@@ -360,9 +365,9 @@ class ManifestChildren implements ArrayAccess
      */
     public function setRole($role)
     {
-        $allowed_values = array('2d', '3d', 'graphics', 'manifest', 'thumbnail', 'Autodesk.CloudPlatform.PropertyDatabase', 'viewable', 'ifc', 'Autodesk.AEC.ModelData');
+        $allowed_values = array('obj', '2d', '3d', 'graphics', 'manifest', 'thumbnail', 'Autodesk.CloudPlatform.PropertyDatabase', 'viewable', 'ifc', 'Autodesk.AEC.ModelData', 'pdf-page');
         if ((!in_array($role, $allowed_values))) {
-            throw new \InvalidArgumentException("Invalid value for 'role', must be one of '2d', '3d', 'graphics', 'manifest', 'thumbnail', 'Autodesk.CloudPlatform.PropertyDatabase', 'viewable', 'ifc', 'Autodesk.AEC.ModelData'");
+            throw new \InvalidArgumentException("Invalid value for 'role', must be one of  'obj', '2d', '3d', 'graphics', 'manifest', 'thumbnail', 'Autodesk.CloudPlatform.PropertyDatabase', 'viewable', 'ifc', 'Autodesk.AEC.ModelData', 'pdf-page'");
         }
         $this->container['role'] = $role;
 
@@ -530,6 +535,15 @@ class ManifestChildren implements ArrayAccess
     }
 
     /**
+     * Gets guid
+     * @return string
+     */
+    public function getGuid()
+    {
+        return $this->container['guid'];
+    }
+
+    /**
      * Sets model_guid
      * @param string $model_guid
      * @return $this
@@ -537,6 +551,18 @@ class ManifestChildren implements ArrayAccess
     public function setModelGuid($model_guid)
     {
         $this->container['model_guid'] = $model_guid;
+
+        return $this;
+    }
+
+    /**
+     * Sets guid
+     * @param string $guid
+     * @return $this
+     */
+    public function setGuid($guid)
+    {
+        $this->container['guid'] = $guid;
 
         return $this;
     }
@@ -612,7 +638,7 @@ class ManifestChildren implements ArrayAccess
 
         return $this;
     }
-    
+
     /**
      * Gets offset.
      * @param  integer $offset Offset
