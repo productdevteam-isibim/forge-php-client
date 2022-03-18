@@ -132,6 +132,7 @@ class ManifestDerivative implements ArrayAccess
     const OUTPUT_TYPE_IGES = 'iges';
     const OUTPUT_TYPE_OBJ = 'obj';
     const OUTPUT_TYPE_SVF = 'svf';
+    const OUTPUT_TYPE_SVF2 = 'svf2';
     const OUTPUT_TYPE_IFC = 'ifc';
     const OUTPUT_TYPE_THUMBNAIL = 'thumbnail';
     const STATUS_PENDING = 'pending';
@@ -140,9 +141,9 @@ class ManifestDerivative implements ArrayAccess
     const STATUS_FAILED = 'failed';
     const STATUS_TIMEOUT = 'timeout';
     const STATUS_PARTIALSUCCESS = 'partialsuccess';
-    
 
-    
+
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -155,11 +156,12 @@ class ManifestDerivative implements ArrayAccess
             self::OUTPUT_TYPE_IGES,
             self::OUTPUT_TYPE_OBJ,
             self::OUTPUT_TYPE_SVF,
+            self::OUTPUT_TYPE_SVF2,
             self::OUTPUT_TYPE_IFC,
             self::OUTPUT_TYPE_THUMBNAIL,
         ];
     }
-    
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -175,7 +177,7 @@ class ManifestDerivative implements ArrayAccess
             self::STATUS_PARTIALSUCCESS,
         ];
     }
-    
+
 
     /**
      * Associative array for storing property values
@@ -212,9 +214,9 @@ class ManifestDerivative implements ArrayAccess
         if ($this->container['has_thumbnail'] === null) {
             $invalid_properties[] = "'has_thumbnail' can't be null";
         }
-        $allowed_values = ["stl", "step", "iges", "obj", "svf", "thumbnail", "ifc"];
+        $allowed_values = ["stl", "step", "iges", "obj", "svf2","svf", "thumbnail", "ifc"];
         if (!in_array($this->container['output_type'], $allowed_values)) {
-            $invalid_properties[] = "invalid value for 'output_type', must be one of 'stl', 'step', 'iges', 'obj', 'svf', 'thumbnail', 'ifc'.";
+            $invalid_properties[] = "invalid value for 'output_type', must be one of 'stl', 'step', 'iges', 'obj', 'svf2','svf', 'thumbnail', 'ifc'.";
         }
 
         if ($this->container['progress'] === null) {
@@ -249,7 +251,7 @@ class ManifestDerivative implements ArrayAccess
         if ($this->container['has_thumbnail'] === null) {
             return false;
         }
-        $allowed_values = ["stl", "step", "iges", "obj", "svf", "thumbnail", "ifc"];
+        $allowed_values = ["stl", "step", "iges", "obj", "svf2","svf", "thumbnail", "ifc"];
         if (!in_array($this->container['output_type'], $allowed_values)) {
             return false;
         }
@@ -328,9 +330,9 @@ class ManifestDerivative implements ArrayAccess
      */
     public function setOutputType($output_type)
     {
-        $allowed_values = array('stl', 'step', 'iges', 'obj', 'svf', 'thumbnail', 'ifc');
+        $allowed_values = array('stl', 'step', 'iges', 'obj', 'svf2','svf', 'thumbnail', 'ifc');
         if (!is_null($output_type) && (!in_array($output_type, $allowed_values))) {
-            throw new \InvalidArgumentException("Invalid value for 'output_type', must be one of 'stl', 'step', 'iges', 'obj', 'svf', 'thumbnail', 'ifc'");
+            throw new \InvalidArgumentException("Invalid value for 'output_type', must be one of 'stl', 'step', 'iges', 'obj', 'svf2','svf', 'thumbnail', 'ifc'");
         }
         $this->container['output_type'] = $output_type;
 

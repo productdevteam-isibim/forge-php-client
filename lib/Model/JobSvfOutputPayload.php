@@ -110,6 +110,7 @@ class JobSvfOutputPayload implements ArrayAccess
         return self::$getters;
     }
 
+    const TYPE_SVF2 = 'svf2';
     const TYPE_SVF = 'svf';
     const TYPE_THUMBNAIL = 'thumbnail';
     const TYPE_STL = 'stl';
@@ -118,9 +119,9 @@ class JobSvfOutputPayload implements ArrayAccess
     const TYPE_OBJ = 'obj';
     const VIEWS__2D = '2d';
     const VIEWS__3D = '3d';
-    
 
-    
+
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -128,6 +129,7 @@ class JobSvfOutputPayload implements ArrayAccess
     public function getTypeAllowableValues()
     {
         return [
+            self::TYPE_SVF2,
             self::TYPE_SVF,
             self::TYPE_THUMBNAIL,
             self::TYPE_STL,
@@ -136,7 +138,7 @@ class JobSvfOutputPayload implements ArrayAccess
             self::TYPE_OBJ,
         ];
     }
-    
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -148,7 +150,7 @@ class JobSvfOutputPayload implements ArrayAccess
             self::VIEWS__3D,
         ];
     }
-    
+
 
     /**
      * Associative array for storing property values
@@ -178,9 +180,9 @@ class JobSvfOutputPayload implements ArrayAccess
         if ($this->container['type'] === null) {
             $invalid_properties[] = "'type' can't be null";
         }
-        $allowed_values = ["svf", "thumbnail", "stl", "step", "iges", "obj"];
+        $allowed_values = ["svf2","svf", "thumbnail", "stl", "step", "iges", "obj"];
         if (!in_array($this->container['type'], $allowed_values)) {
-            $invalid_properties[] = "invalid value for 'type', must be one of 'svf', 'thumbnail', 'stl', 'step', 'iges', 'obj'.";
+            $invalid_properties[] = "invalid value for 'type', must be one of 'svf2','svf', 'thumbnail', 'stl', 'step', 'iges', 'obj'.";
         }
 
         return $invalid_properties;
@@ -198,7 +200,7 @@ class JobSvfOutputPayload implements ArrayAccess
         if ($this->container['type'] === null) {
             return false;
         }
-        $allowed_values = ["svf", "thumbnail", "stl", "step", "iges", "obj"];
+        $allowed_values = ["svf2", "svf", "thumbnail", "stl", "step", "iges", "obj"];
         if (!in_array($this->container['type'], $allowed_values)) {
             return false;
         }
@@ -217,14 +219,14 @@ class JobSvfOutputPayload implements ArrayAccess
 
     /**
      * Sets type
-     * @param string $type The requested output types. Possible values include `svf`, `thumbnai`, `stl`, `step`, `iges`, or `obj`. For a list of supported types, call the [GET formats](https://developer.autodesk.com/en/docs/model-derivative/v2/reference/http/formats-GET) endpoint.
+     * @param string $type The requested output types. Possible values include `svf2`,`svf`, `thumbnai`, `stl`, `step`, `iges`, or `obj`. For a list of supported types, call the [GET formats](https://developer.autodesk.com/en/docs/model-derivative/v2/reference/http/formats-GET) endpoint.
      * @return $this
      */
     public function setType($type)
     {
-        $allowed_values = array('svf', 'thumbnail', 'stl', 'step', 'iges', 'obj');
+        $allowed_values = array('svf2','svf', 'thumbnail', 'stl', 'step', 'iges', 'obj');
         if ((!in_array($type, $allowed_values))) {
-            throw new \InvalidArgumentException("Invalid value for 'type', must be one of 'svf', 'thumbnail', 'stl', 'step', 'iges', 'obj'");
+            throw new \InvalidArgumentException("Invalid value for 'type', must be one of 'svf2','svf', 'thumbnail', 'stl', 'step', 'iges', 'obj'");
         }
         $this->container['type'] = $type;
 

@@ -54,6 +54,7 @@ class FormatsFormats implements ArrayAccess
      * @var string[]
      */
     protected static $swaggerTypes = [
+        'svf2' => 'string[]',
         'svf' => 'string[]',
         'thumbnail' => 'string[]',
         'stl' => 'string[]',
@@ -75,6 +76,7 @@ class FormatsFormats implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
+        'svf2' => 'svf2',
         'svf' => 'svf',
         'thumbnail' => 'thumbnail',
         'stl' => 'stl',
@@ -89,6 +91,7 @@ class FormatsFormats implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
+        'svf2' => 'setSvf2',
         'svf' => 'setSvf',
         'thumbnail' => 'setThumbnail',
         'stl' => 'setStl',
@@ -103,6 +106,7 @@ class FormatsFormats implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
+        'svf2' => 'getSvf2',
         'svf' => 'getSvf',
         'thumbnail' => 'getThumbnail',
         'stl' => 'getStl',
@@ -126,9 +130,9 @@ class FormatsFormats implements ArrayAccess
         return self::$getters;
     }
 
-    
 
-    
+
+
 
     /**
      * Associative array for storing property values
@@ -142,6 +146,7 @@ class FormatsFormats implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
+        $this->container['svf2'] = isset($data['svf2']) ? $data['svf2'] : null;
         $this->container['svf'] = isset($data['svf']) ? $data['svf'] : null;
         $this->container['thumbnail'] = isset($data['thumbnail']) ? $data['thumbnail'] : null;
         $this->container['stl'] = isset($data['stl']) ? $data['stl'] : null;
@@ -192,6 +197,27 @@ class FormatsFormats implements ArrayAccess
     public function setSvf($svf)
     {
         $this->container['svf'] = $svf;
+
+        return $this;
+    }
+
+    /**
+     * Gets svf2
+     * @return string[]
+     */
+    public function getSvf2()
+    {
+        return $this->container['svf2'];
+    }
+
+    /**
+     * Sets svf2
+     * @param string[] $svf2
+     * @return $this
+     */
+    public function setSvf2($svf2)
+    {
+        $this->container['svf2'] = $svf2;
 
         return $this;
     }
