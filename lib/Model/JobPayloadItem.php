@@ -136,6 +136,7 @@ class JobPayloadItem implements ArrayAccess
     {
         return [
             self::TYPE_SVF2,
+            self::TYPE_SVF,
             self::TYPE_THUMBNAIL,
             self::TYPE_STL,
             self::TYPE_STEP,
