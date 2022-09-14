@@ -1040,8 +1040,6 @@ class DerivativesApi extends AbstractApi
             $httpBody = $formParams; // for HTTP post (form)
         }
 
-       
-
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->callApi(
