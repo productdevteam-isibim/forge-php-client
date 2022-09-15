@@ -1084,6 +1084,493 @@ class ObjectsApi extends AbstractApi
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Operation getSignedurls
+     *
+     *
+     *
+     * @param string $bucket_key URL-encoded bucket key (required)
+     * @param string $object_key URL-encoded object key (required)
+     * @param string $upload_key The identifier of a previously-initiated upload, in order to request more chunk upload URLs for the same upload. This must match the uploadKey returned by a previous call to this endpoint where the client requested more than one part URL.
+     * @param string $first_part For a multipart upload, is the starting index when getting upload part URL. If this parameter is not specified the default value is firstPart = 1.
+     * Example: To retrieve the parts from 10 to 15 you should pass firstPart = 10 and parts = 6, this will retrieve the parts 10, 11, 12, 13, 14 and 15.
+     * @param string $parts For a multipart upload, the number of chunk URLs to return. If this parameter is not specified the default value is parts = 1. Maximum number of parts is 25.
+     * Example: To retrieve the parts from 1 to 5 you should pass parts = 5, this will retrieve 5 parts starting from 1 as follows 1, 2, 3, 4 and 5.
+     * @param string $use_acceleration Whether or not to generate an accelerated signed URL (ie: URLs of the form …s3-accelerate.amazonaws.com… vs …s3.amazonaws.com…). When not specified, defaults to true. Providing non-boolean values will result in a 400 error.
+     * @param string $minutes_expiration The custom expiration time within the 1 to 60 minutes range, if not specified, default is 2 minutes.
+     * @throws \Autodesk\Forge\Client\ApiException on non-2xx response
+     * @return \Autodesk\Forge\Client\Model\SignedUpload
+     */
+    public function getSignedUrls($bucket_key, $object_key, $upload_key = null, $first_part = null, $parts = null, $use_acceleration = null, $minutes_expiration = null)
+    {       
+        list($response) = $this->getSignedUrlsWithHttpInfo($bucket_key, $object_key, $upload_key, $first_part, $parts, $use_acceleration, $minutes_expiration);
+        return $response;
+    }
+
+    /**
+     * Operation getSignedurlsWithHttpInfo
+     *
+     *
+     *
+     * @param string $bucket_key URL-encoded bucket key (required)
+     * @param string $object_key URL-encoded object key (required)
+     * @param string $upload_key The identifier of a previously-initiated upload, in order to request more chunk upload URLs for the same upload. This must match the uploadKey returned by a previous call to this endpoint where the client requested more than one part URL.
+     * @param string $first_part For a multipart upload, is the starting index when getting upload part URL. If this parameter is not specified the default value is firstPart = 1.
+     * Example: To retrieve the parts from 10 to 15 you should pass firstPart = 10 and parts = 6, this will retrieve the parts 10, 11, 12, 13, 14 and 15.
+     * @param string $parts For a multipart upload, the number of chunk URLs to return. If this parameter is not specified the default value is parts = 1. Maximum number of parts is 25.
+     * Example: To retrieve the parts from 1 to 5 you should pass parts = 5, this will retrieve 5 parts starting from 1 as follows 1, 2, 3, 4 and 5.
+     * @param string $use_acceleration Whether or not to generate an accelerated signed URL (ie: URLs of the form …s3-accelerate.amazonaws.com… vs …s3.amazonaws.com…). When not specified, defaults to true. Providing non-boolean values will result in a 400 error.
+     * @param string $minutes_expiration The custom expiration time within the 1 to 60 minutes range, if not specified, default is 2 minutes.
+     * @throws \Autodesk\Forge\Client\ApiException on non-2xx response
+     * @return \Autodesk\Forge\Client\Model\SignedUpload, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getSignedUrlsWithHttpInfo($bucket_key, $object_key, $upload_key = null, $first_part = null, $parts = null, $use_acceleration = null, $minutes_expiration = null)
+    {
+        // verify the required parameter 'bucket_key' is set
+        if ($bucket_key === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $bucket_key when calling getSignedUrls');
+        }
+        if (!preg_match("/^[-_.a-z0-9]{3,128}$/", $bucket_key)) {
+            throw new \InvalidArgumentException("invalid value for \"bucket_key\" when calling getSignedUrls, must conform to the pattern /^[-_.a-z0-9]{3,128}$/.");
+        }
+
+        // verify the required parameter 'object_key' is set
+        if ($object_key === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $object_key when calling getSignedUrls');
+        }
+        // parse inputs
+        $resourcePath = "/oss/v2/buckets/{bucketKey}/objects/{objectKey}/signeds3upload";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $formParams = [];
+        
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // query params
+        if ($upload_key !== null) {
+            $queryParams['upload_key'] = $this->apiClient->getSerializer()->toQueryValue($upload_key);
+        }
+        // query params
+        if ($first_part !== null) {
+            $queryParams['first_part'] = $this->apiClient->getSerializer()->toQueryValue($first_part);
+        }
+        // query params
+        if ($parts !== null) {
+            $queryParams['parts'] = $this->apiClient->getSerializer()->toQueryValue($parts);
+        }
+        // query params
+        if ($use_acceleration !== null) {
+            $queryParams['use_acceleration'] = $this->apiClient->getSerializer()->toQueryValue($use_acceleration);
+        }
+        // query params
+        if ($minutes_expiration !== null) {
+            $queryParams['minutes_expiration'] = $this->apiClient->getSerializer()->toQueryValue($minutes_expiration);
+        }
+
+        // path params
+        if ($bucket_key !== null) {
+            $resourcePath = str_replace(
+                "{" . "bucketKey" . "}",
+                $this->apiClient->getSerializer()->toPathValue($bucket_key),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($object_key !== null) {
+            $resourcePath = str_replace(
+                "{" . "objectKey" . "}",
+                $this->apiClient->getSerializer()->toPathValue($object_key),
+                $resourcePath
+            );
+        }
+
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->callApi(
+                $resourcePath,
+                'GET',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                '\Autodesk\Forge\Client\Model\SignedUpload',
+                '/oss/v2/buckets/:bucketKey/objects/:objectKey/signeds3upload'
+            );
+
+            return [
+                $this->apiClient->getSerializer()->deserialize($response, '\Autodesk\Forge\Client\Model\SignedUpload', $httpHeader),
+                $statusCode,
+                $httpHeader,
+            ];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Autodesk\Forge\Client\Model\SignedUpload', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Operation uploadSignedUrls
+     *
+     *
+     *
+     * @param string $signed_url signed_url sent before
+     * 
+     * @throws \Autodesk\Forge\Client\ApiException on non-2xx response
+     
+     
+     */
+    public function uploadSignedUrls($signed_url, $content)
+    {       
+        list($response) = $this->uploadSignedUrlsWithHttpInfo($signed_url, $content);
+        return $response;
+    }
+
+    /**
+     * Operation uploadSignedUrlsWithHttpInfo
+     *
+     *
+     *
+     * @param string $signed_url signed_url sent before
+     * @param mixed $content content with binary content
+     *
+     * @throws \Autodesk\Forge\Client\ApiException on non-2xx response
+     *
+     */
+    public function uploadSignedUrlsWithHttpInfo($signed_url, $content)
+    {
+        // verify the required parameter 'signed_url' is set
+        if ($signed_url === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $signed_url when calling uploadSignedUrls');
+        }
+        // verify the required parameter 'content' is set
+        if ($content === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $content when calling uploadSignedUrls');
+        }
+        
+        // parse inputs
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = $content;
+
+        $_header_accept = $this->apiClient->selectHeaderAccept(['*/*']);
+        if ( ! is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/octet-stream']);
+
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->callApi(
+                $signed_url,
+                'PUT',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                '\Autodesk\Forge\Client\Model\ObjectDetails',
+                'https://cdn.derivative.autodesk.com',
+                false
+            );
+
+            return [
+                //$this->apiClient->getSerializer()->deserialize($response, '\Autodesk\Forge\Client\Model\ObjectDetails', $httpHeader),
+                $response,
+                $statusCode,
+                $httpHeader,
+            ];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Autodesk\Forge\Client\Model\ObjectDetails', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 202:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Autodesk\Forge\Client\Model\Result', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 409:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Autodesk\Forge\Client\Model\Reason', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 416:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Autodesk\Forge\Client\Model\Reason', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            var_dump($e->getResponseBody());
+            throw $e;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+     * Operation postSignedUpload
+     *
+     *
+     *
+     * @param string $bucket_key URL-encoded bucket key (required)
+     * @param string $object_key URL-encoded object key (required)
+     * @param string $upload_key The identifier of a previously-initiated upload
+     * @throws \Autodesk\Forge\Client\ApiException on non-2xx response
+     */
+    public function postSignedUpload($bucket_key, $object_key, $upload_key)
+    {       
+        list($response) = $this->postSignedUploadWithHttpInfo($bucket_key, $object_key, $upload_key);
+        return $response;
+    }
+
+    /**
+     * Operation postSignedUploadWithHttpInfo
+     *
+     *
+     *
+     * @param string $bucket_key URL-encoded bucket key (required)
+     * @param string $object_key URL-encoded object key (required)
+     * @param string $upload_key The identifier of a previously-initiated upload, in order to request more chunk upload URLs for the same upload. This must match the uploadKey returned by a previous call to this endpoint where the client requested more than one part URL.
+     * @throws \Autodesk\Forge\Client\ApiException on non-2xx response
+     * @return \Autodesk\Forge\Client\Model\SignedUpload, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function postSignedUploadWithHttpInfo($bucket_key, $object_key, $upload_key)
+    {
+        // verify the required parameter 'bucket_key' is set
+        if ($bucket_key === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $bucket_key when calling postSignedUpload');
+        }
+        if (!preg_match("/^[-_.a-z0-9]{3,128}$/", $bucket_key)) {
+            throw new \InvalidArgumentException("invalid value for \"bucket_key\" when calling postSignedUpload, must conform to the pattern /^[-_.a-z0-9]{3,128}$/.");
+        }
+
+        // verify the required parameter 'object_key' is set
+        if ($object_key === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $object_key when calling postSignedUpload');
+        }
+        // verify the required parameter 'upload_key' is set
+        if ($upload_key === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $upload_key when calling postSignedUpload');
+        }
+        // parse inputs
+        $resourcePath = "/oss/v2/buckets/{bucketKey}/objects/{objectKey}/signeds3upload";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $formParams = [];
+        
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // form param
+        $formParams['uploadKey'] = $upload_key;
+
+        $httpBody = $formParams;
+
+        // path params
+        if ($bucket_key !== null) {
+            $resourcePath = str_replace(
+                "{" . "bucketKey" . "}",
+                $this->apiClient->getSerializer()->toPathValue($bucket_key),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($object_key !== null) {
+            $resourcePath = str_replace(
+                "{" . "objectKey" . "}",
+                $this->apiClient->getSerializer()->toPathValue($object_key),
+                $resourcePath
+            );
+        }
+
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->callApi(
+                $resourcePath,
+                'POST',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                '\Autodesk\Forge\Client\Model\SignedUpload',
+                '/oss/v2/buckets/{bucketKey}/objects/{objectKey}/signeds3upload'
+            );
+
+            return [
+                $response,//$this->apiClient->getSerializer()->deserialize($response, '\Autodesk\Forge\Client\Model\SignedUpload', $httpHeader),
+                $statusCode,
+                $httpHeader,
+            ];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Autodesk\Forge\Client\Model\SignedUpload', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Operation uploadChunk
      *
@@ -1099,9 +1586,12 @@ class ObjectsApi extends AbstractApi
      * @param string $if_match If-Match header containing a SHA-1 hash of the bytes in the request body can be sent by the calling service or client application with the request. If present, OSS will use the value of If-Match header to verify that a SHA-1 calculated for the uploaded bytes server side matches what was sent in the header. If not, the request is failed with a status 412 Precondition Failed and the data is not written. (optional)
      * @throws \Autodesk\Forge\Client\ApiException on non-2xx response
      * @return \Autodesk\Forge\Client\Model\ObjectDetails
+     * @deprecated Deprecated since 30/09/22, more info see https://forge.autodesk.com/blog/data-management-oss-object-storage-service-migrating-direct-s3-approach
      */
     public function uploadChunk($bucket_key, $object_name, $content_length, $content_range, $session_id, $body, $content_disposition = null, $if_match = null)
     {
+        trigger_deprecation("product-devteam-isibim/forge-client", "1.1.6", "Deprecated since 30/09/22, more info see https://forge.autodesk.com/blog/data-management-oss-object-storage-service-migrating-direct-s3-approach");
+
         list($response) = $this->uploadChunkWithHttpInfo($bucket_key, $object_name, $content_length, $content_range, $session_id, $body, $content_disposition, $if_match);
         return $response;
     }
