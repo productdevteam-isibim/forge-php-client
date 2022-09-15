@@ -1084,60 +1084,6 @@ class ObjectsApi extends AbstractApi
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Operation getSignedurls
      *
@@ -1268,32 +1214,6 @@ class ObjectsApi extends AbstractApi
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Operation uploadSignedUrls
      *
@@ -1302,13 +1222,13 @@ class ObjectsApi extends AbstractApi
      * @param string $signed_url signed_url sent before
      * 
      * @throws \Autodesk\Forge\Client\ApiException on non-2xx response
-     
-     
+     * @return int statusCode of http request
      */
     public function uploadSignedUrls($signed_url, $content)
     {       
-        list($response) = $this->uploadSignedUrlsWithHttpInfo($signed_url, $content);
-        return $response;
+        list($statusCode) = $this->uploadSignedUrlsWithHttpInfo($signed_url, $content);
+        
+        return $statusCode;
     }
 
     /**
@@ -1320,7 +1240,6 @@ class ObjectsApi extends AbstractApi
      * @param mixed $content content with binary content
      *
      * @throws \Autodesk\Forge\Client\ApiException on non-2xx response
-     *
      */
     public function uploadSignedUrlsWithHttpInfo($signed_url, $content)
     {
@@ -1357,76 +1276,17 @@ class ObjectsApi extends AbstractApi
                 false
             );
 
+            //response is empty, you'll have to handle retry is returned statusCode is 100-199, 429, or 500-599  
             return [
-                //$this->apiClient->getSerializer()->deserialize($response, '\Autodesk\Forge\Client\Model\ObjectDetails', $httpHeader),
-                $response,
                 $statusCode,
                 $httpHeader,
             ];
         } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Autodesk\Forge\Client\Model\ObjectDetails', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 202:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Autodesk\Forge\Client\Model\Result', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Autodesk\Forge\Client\Model\Reason', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 416:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Autodesk\Forge\Client\Model\Reason', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-
-            var_dump($e->getResponseBody());
             throw $e;
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
+    /**
      * Operation postSignedUpload
      *
      *
@@ -1435,6 +1295,7 @@ class ObjectsApi extends AbstractApi
      * @param string $object_key URL-encoded object key (required)
      * @param string $upload_key The identifier of a previously-initiated upload
      * @throws \Autodesk\Forge\Client\ApiException on non-2xx response
+     * @return \Autodesk\Forge\Client\Model\ObjectSignedS3, HTTP status code, HTTP response headers (array of strings)
      */
     public function postSignedUpload($bucket_key, $object_key, $upload_key)
     {       
@@ -1451,7 +1312,6 @@ class ObjectsApi extends AbstractApi
      * @param string $object_key URL-encoded object key (required)
      * @param string $upload_key The identifier of a previously-initiated upload, in order to request more chunk upload URLs for the same upload. This must match the uploadKey returned by a previous call to this endpoint where the client requested more than one part URL.
      * @throws \Autodesk\Forge\Client\ApiException on non-2xx response
-     * @return \Autodesk\Forge\Client\Model\SignedUpload, HTTP status code, HTTP response headers (array of strings)
      */
     public function postSignedUploadWithHttpInfo($bucket_key, $object_key, $upload_key)
     {
@@ -1510,66 +1370,19 @@ class ObjectsApi extends AbstractApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Autodesk\Forge\Client\Model\SignedUpload',
+                '\Autodesk\Forge\Client\Model\ObjectSignedS3',
                 '/oss/v2/buckets/{bucketKey}/objects/{objectKey}/signeds3upload'
             );
 
             return [
-                $response,//$this->apiClient->getSerializer()->deserialize($response, '\Autodesk\Forge\Client\Model\SignedUpload', $httpHeader),
+                $this->apiClient->getSerializer()->deserialize($response, '\Autodesk\Forge\Client\Model\ObjectSignedS3', $httpHeader),
                 $statusCode,
                 $httpHeader,
             ];
         } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Autodesk\Forge\Client\Model\SignedUpload', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-
             throw $e;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * Operation uploadChunk

@@ -277,7 +277,7 @@ class DerivativesApi extends AbstractApi
      */
     public function getDerivativeManifest($urn, $derivative_urn, $range = null)
     {
-        @trigger_error("Deprecated since 30/09/22, more info see https://forge.autodesk.com/blog/data-management-oss-object-storage-service-migrating-direct-s3-approach", E_USER_DEPRECATED);
+        trigger_deprecation("product-devteam-isibim/forge-client", "1.1.6", "Deprecated since 30/09/22, more info see https://forge.autodesk.com/blog/data-management-oss-object-storage-service-migrating-direct-s3-approach");
 
         list($response) = $this->getDerivativeManifestWithHttpInfo($urn, $derivative_urn, $range);
 
@@ -298,7 +298,7 @@ class DerivativesApi extends AbstractApi
      */
     public function getDerivativeManifestWithHttpInfo($urn, $derivative_urn, $range = null)
     {
-        @trigger_error("Deprecated since 30/09/22, more info see https://forge.autodesk.com/blog/data-management-oss-object-storage-service-migrating-direct-s3-approach", E_USER_DEPRECATED);
+        trigger_deprecation("product-devteam-isibim/forge-client", "1.1.6", "Deprecated since 30/09/22, more info see https://forge.autodesk.com/blog/data-management-oss-object-storage-service-migrating-direct-s3-approach");
 
         // verify the required parameter 'urn' is set
         if ($urn === null) {
@@ -1039,6 +1039,8 @@ class DerivativesApi extends AbstractApi
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
+
+       
 
         // make the API Call
         try {
