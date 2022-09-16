@@ -17,6 +17,10 @@ and [Design Automation](https://developer.autodesk.com/en/docs/design-automation
 * PHP version 5.4.0 and above.
 * A registered app on the [Forge Developer portal](https://developer.autodesk.com/myapps).
 
+### Before starting
+* Documentation is not everywhere since fork
+* Forked from forge-php-client to fix deprecation since 30/09/2022 and keep this package working
+
 ### Installation
 #### Composer
 
