@@ -137,7 +137,11 @@ class ApiClient
             $postData = json_encode(\Autodesk\Forge\Client\ObjectSerializer::sanitizeForSerialization($postData));
         }
 
-        $url = $this->config->getHost() . $resourcePath;
+        if($endpointPath === "https://cdn.derivative.autodesk.com") {
+            $url = $resourcePath;
+        } else {
+            $url = $this->config->getHost() . $resourcePath;
+        }
 
         $curl = curl_init();
         // set timeout, if needed

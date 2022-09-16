@@ -1,5 +1,5 @@
 {
-  "name": "productdevteam-isibim/forge-client",
+  "name": "oskmoz/forge-client",
   "description": "",
   "keywords": [
     "swagger",
@@ -7,12 +7,12 @@
     "sdk",
     "api"
   ],
-  "homepage": "https://github.com/productdevteam-isibim/forge-php-client",
+  "homepage": "https://github.com/Oskmoz/forge-php-client",
   "license": "Apache-2.0",
   "authors": [
     {
       "name": "Isibim",
-      "homepage": "https://github.com/productdevteam-isibim"
+      "homepage": "https://github.com/Oskmoz"
     }
   ],
   "require": {

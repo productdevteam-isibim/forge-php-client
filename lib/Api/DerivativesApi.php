@@ -134,6 +134,136 @@ class DerivativesApi extends AbstractApi
     }
 
     /**
+     * Operation getFetchDerivativeDownload
+     *
+     *
+     *
+     * @param object $manifestResponse the response sent by the {urn}/manifest/{derivativeurn}/signedcookies endpoint containing etag, url and expiration
+     * @param object $signedCookiesHeader the httpHeader of the response above containing the 3 signedcookies
+     * @throws \Autodesk\Forge\Client\ApiException on non-2xx response
+     * @return array of file content, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getFetchDerivativeDownload($manifestResponse, $signedCookiesHeader)
+    {
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+
+        $resourcePath = $manifestResponse->url;
+        $headerParams['Cookie'] = implode(";", $signedCookiesHeader['Set-Cookie']);
+
+        try {
+            list($response, $statusCode, $httpHeader) = $this->callApi(
+                $resourcePath,
+                'GET',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                null,
+                'https://cdn.derivative.autodesk.com'
+            );
+
+            return [$response, $statusCode, $httpHeader];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getFetchDerivativeManifest
+     *
+     *
+     *
+     * @param string $urn The Base64 (URL Safe) encoded design URN (required)
+     * @param string $derivative_urn The URL-encoded URN of the derivatives. The URN is retrieved from the GET :urn/manifest endpoint. (required)
+     * @throws \Autodesk\Forge\Client\ApiException on non-2xx response
+     * @return void
+     */
+    public function getFetchDerivativeManifest($urn, $derivative_urn)
+    {
+        list($response, $statusCode, $httpheader) = $this->getFetchDerivativeManifestWithHttpInfo($urn, $derivative_urn);
+
+        list($downloadedDerivative) = $this->getFetchDerivativeDownload($response, $httpheader);
+
+        return $downloadedDerivative;
+    }
+
+    /**
+     * Operation getFetchDerivativeManifestWithHttpInfo
+     *
+     *
+     *
+     * @param string $urn The Base64 (URL Safe) encoded design URN (required)
+     * @param string $derivative_urn The URL-encoded URN of the derivatives. The URN is retrieved from the GET :urn/manifest endpoint. (required)
+     * @throws \Autodesk\Forge\Client\ApiException on non-2xx response
+     * @return array of file content, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getFetchDerivativeManifestWithHttpInfo($urn, $derivative_urn)
+    {
+        
+        // verify the required parameter 'urn' is set
+        if ($urn === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $urn when calling getFetchDerivativeManifest');
+        }
+        // verify the required parameter 'derivative_urn' is set
+        if ($derivative_urn === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $derivative_urn when calling getFetchDerivativeManifest');
+        }
+        // parse inputs
+        $resourcePath = "/modelderivative/v2/designdata/{urn}/manifest/{derivativeUrn}/signedcookies";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $_header_accept = $this->apiClient->selectHeaderAccept(['application/octet-stream']);
+        if ( ! is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // path params
+        if ($urn !== null) {
+            $resourcePath = str_replace(
+                "{" . "urn" . "}",
+                $this->apiClient->getSerializer()->toPathValue($urn),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($derivative_urn !== null) {
+            $resourcePath = str_replace(
+                "{" . "derivativeUrn" . "}",
+                $this->apiClient->getSerializer()->toPathValue($derivative_urn),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->callApi(
+                $resourcePath,
+                'GET',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                null,
+                '/modelderivative/v2/designdata/{urn}/manifest/{derivativeUrn}/signedcookies'
+            );
+
+            return [$response, $statusCode, $httpHeader];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
      * Operation getDerivativeManifest
      *
      *
@@ -143,10 +273,14 @@ class DerivativesApi extends AbstractApi
      * @param int $range This is the standard RFC 2616 range request header. It only supports one range specifier per request: 1. Range:bytes&#x3D;0-63 (returns the first 64 bytes) 2. Range:bytes&#x3D;64-127 (returns the second set of 64 bytes) 3. Range:bytes&#x3D;1022- (returns all the bytes from offset 1022 to the end) 4. If the range header is not specified, the whole content is returned. (optional)
      * @throws \Autodesk\Forge\Client\ApiException on non-2xx response
      * @return void
+     * @deprecated Deprecated since 30/09/22, more info see https://forge.autodesk.com/blog/data-management-oss-object-storage-service-migrating-direct-s3-approach
      */
     public function getDerivativeManifest($urn, $derivative_urn, $range = null)
     {
+        trigger_deprecation("product-devteam-isibim/forge-client", "1.1.6", "Deprecated since 30/09/22, more info see https://forge.autodesk.com/blog/data-management-oss-object-storage-service-migrating-direct-s3-approach");
+
         list($response) = $this->getDerivativeManifestWithHttpInfo($urn, $derivative_urn, $range);
+
         return $response;
     }
 
@@ -160,9 +294,12 @@ class DerivativesApi extends AbstractApi
      * @param int $range This is the standard RFC 2616 range request header. It only supports one range specifier per request: 1. Range:bytes&#x3D;0-63 (returns the first 64 bytes) 2. Range:bytes&#x3D;64-127 (returns the second set of 64 bytes) 3. Range:bytes&#x3D;1022- (returns all the bytes from offset 1022 to the end) 4. If the range header is not specified, the whole content is returned. (optional)
      * @throws \Autodesk\Forge\Client\ApiException on non-2xx response
      * @return array of file content, HTTP status code, HTTP response headers (array of strings)
+     * @deprecated Deprecated since 30/09/22, more info see https://forge.autodesk.com/blog/data-management-oss-object-storage-service-migrating-direct-s3-approach
      */
     public function getDerivativeManifestWithHttpInfo($urn, $derivative_urn, $range = null)
     {
+        trigger_deprecation("product-devteam-isibim/forge-client", "1.1.6", "Deprecated since 30/09/22, more info see https://forge.autodesk.com/blog/data-management-oss-object-storage-service-migrating-direct-s3-approach");
+
         // verify the required parameter 'urn' is set
         if ($urn === null) {
             throw new \InvalidArgumentException('Missing the required parameter $urn when calling getDerivativeManifest');
@@ -215,7 +352,6 @@ class DerivativesApi extends AbstractApi
         }
         // make the API Call
         try {
-            var_dump($resourcePath);
             list($response, $statusCode, $httpHeader) = $this->callApi(
                 $resourcePath,
                 'GET',
@@ -903,6 +1039,9 @@ class DerivativesApi extends AbstractApi
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
+
+       
+
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->callApi(

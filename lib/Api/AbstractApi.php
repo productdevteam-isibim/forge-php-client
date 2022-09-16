@@ -79,10 +79,11 @@ abstract class AbstractApi
         $postData,
         $headerParams,
         $responseType = null,
-        $endpointPath = null
+        $endpointPath = null,
+        $bearerNeeded = true
     ) {
         // this endpoint requires OAuth (access token)
-        if ($this->authClient->hasAccessToken()) {
+        if ($this->authClient->hasAccessToken() && $bearerNeeded) {
             $headerParams['Authorization'] = "Bearer {$this->authClient->getAccessToken()}";
         }
 
