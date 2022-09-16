@@ -17,6 +17,10 @@ and [Design Automation](https://developer.autodesk.com/en/docs/design-automation
 * PHP version 5.4.0 and above.
 * A registered app on the [Forge Developer portal](https://developer.autodesk.com/myapps).
 
+### Before starting
+* Documentation is not everywhere since fork
+* Forked from forge-php-client to fix deprecation since 30/09/2022 and keep this package working
+
 ### Installation
 #### Composer
 
@@ -180,6 +184,7 @@ Class | Method | HTTP request | Description
 *BucketsApi* | [**getBuckets**](docs/Api/BucketsApi.md#getbuckets) | **GET** /oss/v2/buckets | 
 *DerivativesApi* | [**deleteManifest**](docs/Api/DerivativesApi.md#deletemanifest) | **DELETE** /modelderivative/v2/designdata/{urn}/manifest | 
 *DerivativesApi* | [**getDerivativeManifest**](docs/Api/DerivativesApi.md#getderivativemanifest) | **GET** /modelderivative/v2/designdata/{urn}/manifest/{derivativeUrn} | 
+*DerivativesApi* | getFetchDerivativeManifest | **GET** /modelderivative/v2/designdata/{urn}/manifest/{derivativeUrn}/signedcookies | 
 *DerivativesApi* | [**getFormats**](docs/Api/DerivativesApi.md#getformats) | **GET** /modelderivative/v2/designdata/formats | 
 *DerivativesApi* | [**getManifest**](docs/Api/DerivativesApi.md#getmanifest) | **GET** /modelderivative/v2/designdata/{urn}/manifest | 
 *DerivativesApi* | [**getMetadata**](docs/Api/DerivativesApi.md#getmetadata) | **GET** /modelderivative/v2/designdata/{urn}/metadata | 
@@ -214,6 +219,7 @@ Class | Method | HTTP request | Description
 *ObjectsApi* | [**getObjectDetails**](docs/Api/ObjectsApi.md#getobjectdetails) | **GET** /oss/v2/buckets/{bucketKey}/objects/{objectName}/details | 
 *ObjectsApi* | [**getObjects**](docs/Api/ObjectsApi.md#getobjects) | **GET** /oss/v2/buckets/{bucketKey}/objects | 
 *ObjectsApi* | [**getSignedResource**](docs/Api/ObjectsApi.md#getsignedresource) | **GET** /oss/v2/signedresources/{id} | 
+*ObjectsApi* | getSignedUrls | **GET** /oss/v2/buckets/{bucketKey}/objects/{objectKey}/signeds3upload | 
 *ObjectsApi* | [**getStatusBySessionId**](docs/Api/ObjectsApi.md#getstatusbysessionid) | **GET** /oss/v2/buckets/{bucketKey}/objects/{objectName}/status/{sessionId} | 
 *ObjectsApi* | [**uploadChunk**](docs/Api/ObjectsApi.md#uploadchunk) | **PUT** /oss/v2/buckets/{bucketKey}/objects/{objectName}/resumable | 
 *ObjectsApi* | [**uploadObject**](docs/Api/ObjectsApi.md#uploadobject) | **PUT** /oss/v2/buckets/{bucketKey}/objects/{objectName} | 
@@ -223,6 +229,7 @@ Class | Method | HTTP request | Description
 *ProjectsApi* | [**getProject**](docs/Api/ProjectsApi.md#getproject) | **GET** /project/v1/hubs/{hub_id}/projects/{project_id} | 
 *ProjectsApi* | [**getProjectHub**](docs/Api/ProjectsApi.md#getprojecthub) | **GET** /project/v1/hubs/{hub_id}/projects/{project_id}/hub | 
 *ProjectsApi* | [**getProjectTopFolders**](docs/Api/ProjectsApi.md#getprojecttopfolders) | **GET** /project/v1/hubs/{hub_id}/projects/{project_id}/topFolders | 
+*ProjectsApi* | postSignedUpload | **GET** /oss/v2/buckets/{bucketKey}/objects/{objectKey}/signeds3upload | 
 *ProjectsApi* | [**postStorage**](docs/Api/ProjectsApi.md#poststorage) | **POST** /data/v1/projects/{project_id}/storage | 
 *UserProfileApi* | [**getUserProfile**](docs/Api/UserProfileApi.md#getuserprofile) | **GET** /userprofile/v1/users/@me | Returns the profile information of an authorizing end user.
 *VersionsApi* | [**getVersion**](docs/Api/VersionsApi.md#getversion) | **GET** /data/v1/projects/{project_id}/versions/{version_id} | 
